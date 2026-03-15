@@ -19,15 +19,14 @@ const VideoCard = ({ video, initialLiked = false, initialSaved = false }) => {
   const ytUrl = `https://www.youtube.com/watch?v=${videoId}`;
   const catColor = CATEGORY_COLORS[category] || CATEGORY_COLORS.general;
 
-  const handleWatch = async () => {
-    // Track watch history
+const handleWatch = async () => {
     try {
       await axios.post('/api/user/watch', { videoId, title, thumbnail, channelTitle, category });
     } catch (_) {}
-    // Open YouTube
-    window.open(ytUrl, '_blank', 'noopener,noreferrer');
+    // Open YouTube in fullscreen mode
+    const fullscreenUrl = `https://www.youtube.com/watch?v=${videoId}&autoplay=1&fs=1`;
+    window.open(fullscreenUrl, '_blank', 'noopener,noreferrer');
   };
-
   const handleLike = async (e) => {
     e.stopPropagation();
     if (loading.like) return;
